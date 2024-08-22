@@ -9,25 +9,28 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Program 1", group="Linear OpMode")
 @Disabled
-public class Prog1 extends LinearOpMode {
+public class DriveBaseTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
-    private DcMotor leftBackDrive = null;
+    private DcMotor leftFrontDrive;
+    private DcMotor rightFrontDrive;
+    private DcMotor rightBackDrive;
+    private DcMotor leftBackDrive;
 
     @Override
     public void runOpMode() {
+        // Get motors
         leftFrontDrive = hardwareMap.get(DcMotor.class, "lfd");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rfd");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rbd");
         leftBackDrive = hardwareMap.get(DcMotor.class, "lbd");
 
+        // Set motor directions
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        // Display telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -37,15 +40,18 @@ public class Prog1 extends LinearOpMode {
         while (opModeIsActive()) {
             double max;
 
+            // Get gamepad input
             double axial = -gamepad1.left_stick_y;
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
 
+            // Calculate motor powers
             double leftFrontPower = axial + lateral + yaw;
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower = axial - lateral + yaw;
             double rightBackPower = axial + lateral - yaw;
 
+            // Make sure motors don't go above max power
             max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
@@ -57,6 +63,7 @@ public class Prog1 extends LinearOpMode {
                 rightBackPower /= max;
             }
 
+            // Apply power
             leftFrontDrive.setPower(leftFrontPower);
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
