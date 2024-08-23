@@ -48,5 +48,60 @@ public class DriveBaseAuto extends LinearOpMode {
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        waitForStart();
+
+        encoderDrive(DRIVE_SPEED, 48, 48, 48, 48, 5.0);
+    }
+
+    private void encoderDrive(double driveSpeed, double leftFrontInches, double rightFrontInches, double rightBackInches, double leftBackInches, double timeoutS) {
+        int newLeftFrontTarget;
+        int newRightFrontTarget;
+        int newLeftBackTarget;
+        int newRightBackTarget;
+
+        if (opModeIsActive()) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(leftFrontInches * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(rightFrontInches * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(leftBackInches * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(rightBackInches * COUNTS_PER_INCH);
+
+            leftFrontDrive.setTargetPosition(newLeftFrontTarget);
+            rightFrontDrive.setTargetPosition(newRightFrontTarget);
+            leftBackDrive.setTargetPosition(newLeftBackTarget);
+            rightBackDrive.setTargetPosition(newRightBackTarget);
+
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            runtime.reset();
+
+            leftFrontDrive.setPower(Math.abs(driveSpeed));
+            rightFrontDrive.setPower(Math.abs(driveSpeed));
+            leftBackDrive.setPower(Math.abs(driveSpeed));
+            rightBackDrive.setPower(Math.abs(driveSpeed));
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (leftFrontDrive.isBusy() && rightFrontDrive.isBusy() && leftBackDrive.isBusy() && rightBackDrive.isBusy())) {
+
+                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newLeftFrontTarget,  newRightFrontTarget, newLeftBackTarget, newRightBackTarget);
+                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d",
+                        leftFrontDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), leftBackDrive.getCurrentPosition(), rightBackDrive.getCurrentPosition());
+                telemetry.update();
+            }
+
+            leftFrontDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightBackDrive.setPower(0);
+
+            leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 }
