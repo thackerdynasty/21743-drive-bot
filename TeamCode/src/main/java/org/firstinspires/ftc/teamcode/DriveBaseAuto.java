@@ -50,7 +50,9 @@ public class DriveBaseAuto extends LinearOpMode {
 
         waitForStart();
 
-        encoderDrive(DRIVE_SPEED, 48, 48, 48, 48, 5.0);
+        double distance = 24.375 * 3; // Length of tile times three tiles
+
+        encoderDrive(DRIVE_SPEED, distance, distance, distance, distance, 10);
     }
 
     private void encoderDrive(double driveSpeed, double leftFrontInches, double rightFrontInches, double rightBackInches, double leftBackInches, double timeoutS) {
