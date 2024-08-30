@@ -14,6 +14,8 @@ public class DriveBaseTeleOp extends LinearOpMode {
     private DcMotor rightBackDrive;
     private DcMotor leftBackDrive;
 
+    private boolean isSlow = false;
+
     @Override
     public void runOpMode() {
         // Get motors
@@ -48,6 +50,8 @@ public class DriveBaseTeleOp extends LinearOpMode {
         double lateral = gamepad1.left_stick_x;
         double yaw = gamepad1.right_stick_x;
 
+        double leftTrigger = gamepad1.left_trigger;
+
         // Calculate motor powers
         double leftFrontPower = axial + lateral + yaw;
         double rightFrontPower = axial - lateral - yaw;
@@ -64,6 +68,21 @@ public class DriveBaseTeleOp extends LinearOpMode {
             rightFrontPower /= max;
             leftBackPower /= max;
             rightBackPower /= max;
+        }
+
+        if (leftTrigger >= 0.5) {
+            if (isSlow) {
+                isSlow = false;
+            } else {
+                isSlow = true;
+            }
+        }
+
+        if (isSlow) {
+            leftFrontPower /= 2;
+            rightFrontPower /= 2;
+            leftBackPower /= 2;
+            rightBackPower /= 2;
         }
 
         // Apply power
