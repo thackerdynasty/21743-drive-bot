@@ -15,9 +15,8 @@ public class DriveBaseAuto extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double COUNTS_PER_MOTOR_REV = 537.7;    // eg: TETRIX Motor Encoder
-    static final double DRIVE_GEAR_REDUCTION = 1.0;     // No External Gearing.
-    static final double WHEEL_CIRCUMFERENCE_INCHES = 3.77953;
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / WHEEL_CIRCUMFERENCE_INCHES;
+    static final double WHEEL_DIAMETER_INCHES = 3.78;
+    static final double COUNTS_PER_INCH = COUNTS_PER_MOTOR_REV / (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.6;
     static final double TURN_SPEED = 0.5;
 
@@ -43,6 +42,11 @@ public class DriveBaseAuto extends LinearOpMode {
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Status", "Initialized");
