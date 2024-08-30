@@ -51,6 +51,7 @@ public class DriveBaseTeleOp extends LinearOpMode {
         double yaw = gamepad1.right_stick_x;
 
         double leftTrigger = gamepad1.left_trigger;
+        double rightTrigger = gamepad1.right_trigger;
 
         // Calculate motor powers
         double leftFrontPower = axial + lateral + yaw;
@@ -71,11 +72,11 @@ public class DriveBaseTeleOp extends LinearOpMode {
         }
 
         if (leftTrigger >= 0.5) {
-            if (isSlow) {
-                isSlow = false;
-            } else {
-                isSlow = true;
-            }
+            isSlow = true;
+        }
+
+        if (rightTrigger >= 0.5) {
+            isSlow = false;
         }
 
         if (isSlow) {
