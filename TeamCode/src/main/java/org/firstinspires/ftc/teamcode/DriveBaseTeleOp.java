@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.LightBlinker;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="DriveBaseTeleOp", group="Linear OpMode")
@@ -36,7 +35,7 @@ public class DriveBaseTeleOp extends LinearOpMode {
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+        blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
 
         // Display telemetry
         telemetry.addData("Status", "Initialized");
@@ -86,7 +85,7 @@ public class DriveBaseTeleOp extends LinearOpMode {
 
         if (rightTrigger >= 0.5) {
             isSlow = false;
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
         }
 
         if (isSlow) {
