@@ -21,6 +21,7 @@ public class DriveBaseTeleOp extends LinearOpMode {
     private RevBlinkinLedDriver blinkin;
 
     private boolean isSlow = false;
+    private boolean isArmSlow = false;
 
     @Override
     public void runOpMode() {
@@ -67,6 +68,7 @@ public class DriveBaseTeleOp extends LinearOpMode {
 
         boolean rightBumper = gamepad1.right_bumper;
         boolean leftBumper = gamepad1.left_bumper;
+        boolean bButton = gamepad1.b;
 
         // Calculate motor powers
         double leftFrontPower = axial + lateral + yaw;
@@ -100,12 +102,25 @@ public class DriveBaseTeleOp extends LinearOpMode {
 
         }
 
+
+
         if (isSlow) {
             leftFrontPower /= 2;
             rightFrontPower /= 2;
             leftBackPower /= 2;
             rightBackPower /= 2;
         }
+
+        if (bButton) {
+            if (isArmSlow) {
+                isArmSlow = false;
+            } else {
+                isArmSlow = true;
+            }
+        }
+
+
+
 
         // Apply power
         leftFrontDrive.setPower(leftFrontPower);
