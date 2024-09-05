@@ -40,6 +40,8 @@ public class DriveBaseTeleOp extends LinearOpMode {
         rightBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        armServo.setDirection(Servo.Direction.FORWARD);
+
         blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
 
         // Display telemetry
@@ -97,7 +99,9 @@ public class DriveBaseTeleOp extends LinearOpMode {
         }
 
         if (rightBumper) {
-
+            armServo.setPosition(armServo.getPosition() + 0.01);
+        } else if (leftBumper) {
+            armServo.setPosition(armServo.getPosition() - 0.01);
         }
 
         if (isSlow) {
