@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="DriveBaseTeleOp", group="Linear OpMode")
@@ -14,6 +15,8 @@ public class DriveBaseTeleOp extends LinearOpMode {
     private DcMotor rightFrontDrive;
     private DcMotor rightBackDrive;
     private DcMotor leftBackDrive;
+
+    private Servo armServo;
 
     private RevBlinkinLedDriver blinkin;
 
@@ -26,6 +29,8 @@ public class DriveBaseTeleOp extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rfd");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rbd");
         leftBackDrive = hardwareMap.get(DcMotor.class, "lbd");
+
+        armServo = hardwareMap.get(Servo.class, "armServo");
 
         blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
 
@@ -60,6 +65,9 @@ public class DriveBaseTeleOp extends LinearOpMode {
         double leftTrigger = gamepad1.left_trigger;
         double rightTrigger = gamepad1.right_trigger;
 
+        boolean rightBumper = gamepad1.right_bumper;
+        boolean leftBumper = gamepad1.left_bumper;
+
         // Calculate motor powers
         double leftFrontPower = axial + lateral + yaw;
         double rightFrontPower = axial - lateral - yaw;
@@ -86,6 +94,10 @@ public class DriveBaseTeleOp extends LinearOpMode {
         if (rightTrigger >= 0.5) {
             isSlow = false;
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
+        }
+
+        if (rightBumper) {
+
         }
 
         if (isSlow) {
