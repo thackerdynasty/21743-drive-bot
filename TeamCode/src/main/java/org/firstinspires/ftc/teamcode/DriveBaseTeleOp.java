@@ -103,14 +103,22 @@ public class DriveBaseTeleOp extends LinearOpMode {
         if (rightBumper) {
             if (isArmSlow) {
                 armServo.setPosition(armServo.getPosition() + 0.01);
+                telemetry.addData("Arm Servo Position", armServo.getPosition());
+                telemetry.update();
             } else {
                 armServo.setPosition(armServo.getPosition() + 0.03);
+                telemetry.addData("Arm Servo Position", armServo.getPosition());
+                telemetry.update();
             }
         } else if (leftBumper) {
             if (isArmSlow) {
                 armServo.setPosition(armServo.getPosition() - 0.01);
+                telemetry.addData("Arm Servo Position", armServo.getPosition());
+                telemetry.update();
             } else {
                 armServo.setPosition(armServo.getPosition() - 0.03);
+                telemetry.addData("Arm Servo Position", armServo.getPosition());
+                telemetry.update();
             }
         }
 
