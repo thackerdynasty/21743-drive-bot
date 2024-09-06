@@ -101,12 +101,18 @@ public class DriveBaseTeleOp extends LinearOpMode {
         }
 
         if (rightBumper) {
-            armServo.setPosition(armServo.getPosition() + 0.01);
+            if (isArmSlow) {
+                armServo.setPosition(armServo.getPosition() + 0.01);
+            } else {
+                armServo.setPosition(armServo.getPosition() + 0.03);
+            }
         } else if (leftBumper) {
-            armServo.setPosition(armServo.getPosition() - 0.01);
+            if (isArmSlow) {
+                armServo.setPosition(armServo.getPosition() - 0.01);
+            } else {
+                armServo.setPosition(armServo.getPosition() - 0.03);
+            }
         }
-
-
 
         if (isSlow) {
             leftFrontPower /= 2;
