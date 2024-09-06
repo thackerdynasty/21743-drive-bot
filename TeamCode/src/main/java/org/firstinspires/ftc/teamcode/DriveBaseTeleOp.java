@@ -42,7 +42,6 @@ public class DriveBaseTeleOp extends LinearOpMode {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         armServo.setDirection(Servo.Direction.FORWARD);
-        armServo.scaleRange(0.0, 0.25);
 
         blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
 
@@ -102,27 +101,9 @@ public class DriveBaseTeleOp extends LinearOpMode {
         }
 
         if (rightBumper) {
-//            if (isArmSlow) {
-//                armServo.setPosition(armServo.getPosition() + 0.01);
-//                telemetry.addData("Arm Servo Position", armServo.getPosition());
-//                telemetry.update();
-//            } else {
-//                armServo.setPosition(armServo.getPosition() + 0.03);
-//                telemetry.addData("Arm Servo Position", armServo.getPosition());
-//                telemetry.update();
-//            }
-            armServo.setPosition(1);
+            armServo.setPosition(0.3);
         }
         if (leftBumper) {
-//            if (isArmSlow) {
-//                armServo.setPosition(armServo.getPosition() - 0.01);
-//                telemetry.addData("Arm Servo Position", armServo.getPosition());
-//                telemetry.update();
-//            } else {
-//                armServo.setPosition(armServo.getPosition() - 0.03);
-//                telemetry.addData("Arm Servo Position", armServo.getPosition());
-//                telemetry.update();
-//            }
             armServo.setPosition(0);
         }
 
