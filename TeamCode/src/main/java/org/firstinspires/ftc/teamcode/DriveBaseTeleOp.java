@@ -120,8 +120,6 @@ public class DriveBaseTeleOp extends LinearOpMode {
         }
 
 
-
-
         // Apply power
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
