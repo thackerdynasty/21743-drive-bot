@@ -1,3 +1,5 @@
+# THIS REPOSITORY IS NO LONGER USED. PLEASE SEE 21743-jeffrey for completed code. Note that both these repos are archived.
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the CENTERSTAGE (2023-2024) competition season.
